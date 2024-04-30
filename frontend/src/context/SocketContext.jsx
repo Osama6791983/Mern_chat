@@ -12,7 +12,7 @@ export const SocketContextProvider = ({ children }) => {
   const { authUser } = useAuthContext();
   const initlizeSocket = () => {
     if (authUser) {
-      const socket = io("http://localhost:5000", {
+      const socket = io("https://quickchat-ci0f.onrender.com", {
         query: {
           userId: authUser?._id,
         },
