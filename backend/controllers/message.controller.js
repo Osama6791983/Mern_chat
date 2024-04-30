@@ -1,4 +1,5 @@
 import converstaionModel from "../models/conversation.model.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 import messageModel from "./../models/message.model.js";
 
 export const sendMessage = async (req, res) => {
@@ -18,12 +19,18 @@ export const sendMessage = async (req, res) => {
         if (newMessage) {
             conversation.messages.push(newMessage._id);
         }
+       
+
         // await conversation.save();
         // await newMessage.save();
         //optimization of my code here
         // this will run parallel
         await Promise.all([conversation.save(), newMessage.save()]);
 
+        const receiverSocketId = getReceiverSocketId(recieverId)
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage",newMessage);
+        }
         res.status(201).json({ newMessage });
     } catch (error) {
         console.log(`Error in send message controller ${error.message}`);
