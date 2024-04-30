@@ -1,4 +1,4 @@
-const GenderCheckbox = () => {
+const GenderCheckbox = ({ onCheckBoxChange, selectedGender }) => {
   return (
     <div className="flex gap-6">
       <div className="form-control flex gap-4">
@@ -7,8 +7,12 @@ const GenderCheckbox = () => {
           <input
             type="radio"
             name="radio-10"
+            value={"male"}
+            onClick={(e) => {
+              onCheckBoxChange(e);
+            }}
             className="radio checked:bg-red-500 ml-4 bg-gray-500"
-            checked
+            checked ={selectedGender==="male"}
           />
         </label>
       </div>
@@ -19,7 +23,11 @@ const GenderCheckbox = () => {
             type="radio"
             name="radio-10"
             className="radio checked:bg-blue-500 ml-4 bg-gray-500"
-            
+            value={"female"}
+            onClick={(e) => {
+              onCheckBoxChange(e);
+            }}
+            checked={selectedGender === "female"}
           />
         </label>
       </div>
